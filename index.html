@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Al Mokka Abbigliamento, Via del Trullo 288 a Roma: uomo, donna, bambino e bambina, biancheria da letto e intimo. Taglie dalla S alla 8XL, abbigliamento da lavoro.">
+<style>
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+  :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+</style>
+<title>Al Mokka Abbigliamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;600;700;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+  /* Layout: insegna come marchio, nastro scorrevole dei reparti, griglie a card, banda blu per i contatti. */
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --tint: #f4f7fc;
+    --fg: #121d2b;
+    --muted: #55657a;
+    --line: #e1e8f1;
+    --blue: #0a5fe0;
+    --blue-deep: #063f96;
+    --on-blue: #ffffff;
+    --red: #d92027;
+    --display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+    --body: "Barlow", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  section { padding-block: 64px; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.02; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(36px, 5.4vw, 54px); font-weight: 800; text-transform: uppercase; letter-spacing: -.005em; }
+  .eyebrow {
+    font-family: var(--display); font-weight: 600; font-size: 16px;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--red); margin: 0 0 10px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .lead { color: var(--muted); max-width: 58ch; margin: 14px auto 0; font-size: 18px; }
+
+  /* intestazioni di sezione centrate */
+  section > .wrap > .eyebrow,
+  section > .wrap > h2,
+  section > .wrap > .lead { text-align: center; }
+
+  /* stato apertura in tempo reale */
+  .status {
+    display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    border: 1px solid var(--line); background: var(--surface); border-radius: 999px;
+    padding: 9px 18px; font-size: 15px; font-weight: 600; margin: 0 0 18px;
+    box-shadow: 0 8px 20px rgba(18, 29, 43, .06);
+  }
+  .status .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); flex: none; }
+  .status.is-open .dot { background: #15a34a; box-shadow: 0 0 0 4px rgba(21, 163, 74, .16); }
+  .status.is-closed .dot { background: var(--red); box-shadow: 0 0 0 4px rgba(217, 32, 39, .14); }
+  .status .count { font-variant-numeric: tabular-nums; color: var(--blue); font-weight: 700; letter-spacing: .01em; }
+  .status.in-contact { margin: 14px 0 0; }
+
+  /* tabella orari */
+  .hours { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .hours th, .hours td { padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 17px; }
+  .hours th { text-align: left; font-weight: 400; }
+  .hours td { text-align: right; font-variant-numeric: tabular-nums; }
+  .hours tr.today th, .hours tr.today td { font-weight: 700; color: var(--blue); }
+  .hours-note { color: var(--muted); font-size: 14px; margin: 12px 0 0; }
+
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+    background: var(--surface); z-index: 20;
+  }
+
+  .draft {
+    background: var(--fg); color: #fff; text-align: center;
+    font-size: 14px; padding: 9px 16px; letter-spacing: .01em;
+  }
+
+  /* insegna */
+  .sign {
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    line-height: 1; text-decoration: none;
+  }
+  .sign .a { font-family: var(--display); font-weight: 300; color: var(--blue); font-size: 31px; letter-spacing: .03em; }
+  .sign .b { font-family: var(--display); font-weight: 800; color: var(--red); font-size: 15px; letter-spacing: .03em; margin-top: 4px; }
+  .sign.big .a { font-size: clamp(60px, 11.5vw, 118px); }
+  .sign.big .b { font-size: clamp(28px, 5.2vw, 52px); margin-top: 10px; }
+
+  /* header */
+  header {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+    background: rgba(255, 255, 255, .92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent; transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  header.stuck { border-bottom-color: var(--line); box-shadow: 0 6px 24px rgba(18, 29, 43, .06); }
+  header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding-block: 16px; }
+  nav { display: flex; flex-wrap: wrap; gap: 4px 26px; font-weight: 500; font-size: 16px; }
+  nav a { text-decoration: none; color: var(--muted); position: relative; padding-block: 2px; }
+  nav a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+    background: var(--blue); transform: scaleX(0); transform-origin: left; transition: transform .22s ease;
+  }
+  nav a:hover { color: var(--fg); }
+  nav a:hover::after { transform: scaleX(1); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 50px; padding: 0 24px;
+    border-radius: 999px; font-weight: 600; text-decoration: none; border: 1.5px solid var(--blue);
+    font-size: 17px;
+  }
+  .btn.primary { background: var(--blue); color: var(--on-blue); box-shadow: 0 10px 24px rgba(10, 95, 224, .22); }
+  .btn.ghost { color: var(--blue); background: transparent; }
+  .btn.light { background: #fff; color: var(--blue-deep); border-color: #fff; }
+  .btn.outline-light { color: #fff; border-color: rgba(255, 255, 255, .6); }
+  button.btn { font-family: inherit; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; padding-block: 44px 20px; }
+  .hero::before, .hero::after {
+    content: ""; position: absolute; border-radius: 50%; z-index: -1; pointer-events: none;
+  }
+  .hero::before { width: 520px; height: 520px; right: -170px; top: -190px; background: radial-gradient(circle, rgba(10,95,224,.14), transparent 68%); }
+  .hero::after { width: 420px; height: 420px; left: -180px; bottom: -200px; background: radial-gradient(circle, rgba(217,32,39,.12), transparent 68%); }
+  .hero .wrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; }
+  .hero h1 { font-size: clamp(42px, 7vw, 78px); font-weight: 800; text-transform: uppercase; letter-spacing: -.01em; }
+  .hero h1 em { font-style: normal; color: var(--blue); }
+  .hero p { color: var(--muted); font-size: 19px; max-width: 48ch; margin: 18px auto 0; }
+  .hero .eyebrow { justify-content: center; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; justify-content: center; }
+  .hero-art { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; margin-bottom: 26px; }
+  .hero-art small { color: var(--muted); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+
+  /* nastro scorrevole */
+  .ticker {
+    border-block: 1px solid var(--line); background: var(--tint);
+    overflow: hidden; margin-top: 34px;
+  }
+  .ticker-track { display: flex; width: max-content; }
+  .ticker-group { display: flex; align-items: center; padding-block: 16px; }
+  .ticker-group span {
+    font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.4vw, 38px);
+    text-transform: uppercase; letter-spacing: .05em; padding-inline: 26px; white-space: nowrap;
+    color: var(--blue-deep);
+  }
+  .ticker-group span:nth-child(even) {
+    color: transparent; -webkit-text-stroke: 1.2px var(--blue); text-stroke: 1.2px var(--blue);
+  }
+
+  /* categorie */
+  .cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+  .cat {
+    position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 32px 26px; min-height: 180px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  }
+  .cat::before {
+    content: ""; position: absolute; inset: auto 0 0 0; height: 4px; background: var(--blue);
+    transform: scaleX(0); transform-origin: left;
+  }
+  .cat h3 { font-size: 38px; font-weight: 800; text-transform: uppercase; }
+  .cat p { margin: 0 auto; color: var(--muted); font-size: 16px; max-width: 32ch; }
+  .cat h3, .cat p { position: relative; z-index: 1; }
+
+  /* informazioni pratiche */
+  .infos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 18px; }
+  .info-card {
+    background: var(--tint); border: 1px solid var(--line); border-radius: 14px; padding: 28px 24px;
+    text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  }
+  .info-card h3 { font-size: 27px; font-weight: 700; text-transform: uppercase; color: var(--blue-deep); }
+  .info-card p { margin: 0 auto; color: var(--muted); font-size: 16px; max-width: 34ch; }
+
+  /* metodi di pagamento */
+  .pays { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 14px 0 0; }
+  .pays li {
+    border: 1px solid var(--line); background: var(--surface); border-radius: 9px;
+    padding: 7px 11px; display: flex; align-items: center; justify-content: center;
+  }
+  .pays img { height: 26px; width: auto; display: block; }
+  .pays-note { color: var(--muted); font-size: 15px; margin: 12px 0 0; }
+
+  /* comparsa durante lo scorrimento */
+  .reveal-on .reveal { opacity: 0; transform: translateY(22px); }
+  .reveal-on .reveal.in {
+    opacity: 1; transform: none;
+    transition: opacity .6s ease, transform .6s cubic-bezier(.2, .7, .3, 1);
+  }
+
+  /* marchi */
+  .brands-band { background: var(--tint); border-block: 1px solid var(--line); }
+  .brands { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 32px; }
+  .brand {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    aspect-ratio: 16 / 9; max-width: 100%; display: flex; align-items: center; justify-content: center;
+    padding: 26px;
+  }
+  .brand img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; opacity: .82; }
+  .brands-note { color: var(--muted); margin: 22px 0 0; font-size: 16px; }
+
+  /* recensioni */
+  .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+  .review {
+    position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 58px 26px 28px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .review::before {
+    content: "\201C"; position: absolute; left: 0; right: 0; top: 8px; font-family: var(--display);
+    font-size: 86px; line-height: 1; color: var(--blue); opacity: .18;
+  }
+  .review p { margin: 0 auto; font-size: 18px; max-width: 30ch; }
+  .review .who { font-family: var(--display); text-transform: uppercase; letter-spacing: .12em; font-size: 15px; color: var(--red); font-weight: 600; }
+  .review.todo-card { border-style: dashed; }
+  .review.todo-card p { color: var(--muted); font-size: 15px; }
+  .reviews-link { margin: 24px 0 0; font-size: 16px; }
+
+  /* chi siamo */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; align-items: center; margin-top: 36px; }
+  .about > div:first-child { text-align: center; }
+  .about p { color: var(--muted); max-width: 52ch; margin: 0 auto; }
+  .ph {
+    border: 2px dashed var(--line); border-radius: 16px; aspect-ratio: 4 / 3; max-width: 100%;
+    display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px;
+    color: var(--muted); background: var(--tint); font-size: 15px;
+  }
+  .facts { display: flex; gap: 40px; margin-top: 32px; flex-wrap: wrap; justify-content: center; }
+  .fact b { display: block; font-family: var(--display); font-size: 62px; font-weight: 800; color: var(--blue); line-height: 1; font-variant-numeric: tabular-nums; }
+  .fact span { color: var(--muted); font-size: 15px; }
+
+  /* banda blu */
+  .band { background: linear-gradient(135deg, var(--blue-deep), var(--blue)); color: #fff; }
+  .band .wrap { padding-block: 56px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+  .band h2 { color: #fff; }
+  .band p { margin: 12px auto 0; color: rgba(255, 255, 255, .86); max-width: 44ch; }
+
+  /* contatti */
+  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 34px; align-items: start; }
+  .info { display: grid; gap: 20px; }
+  .info dt { font-family: var(--display); text-transform: uppercase; letter-spacing: .14em; font-size: 15px; color: var(--red); font-weight: 600; }
+  .info dd { margin: 3px 0 0; font-size: 19px; }
+  .info a { text-decoration: none; border-bottom: 1.5px solid var(--line); }
+  .todo { color: var(--muted); font-size: 15px; }
+  .mapbox {
+    margin-top: 10px; aspect-ratio: 16 / 9; border-radius: 16px; border: 1px solid var(--line);
+    background: var(--tint); display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; text-align: center; padding: 18px; color: var(--muted); font-size: 15px;
+  }
+  form { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; gap: 15px; box-shadow: 0 18px 44px rgba(18, 29, 43, .06); }
+  form h3 { font-size: 32px; font-weight: 800; text-transform: uppercase; }
+  label { font-size: 15px; font-weight: 600; display: grid; gap: 6px; }
+  input[type="text"], input[type="tel"], input[type="email"], textarea {
+    font: inherit; color: var(--fg); background: #fff; border: 1.5px solid var(--line);
+    border-radius: 10px; padding: 13px 15px; width: 100%; min-width: 0;
+    transition: border-color .18s ease, box-shadow .18s ease;
+  }
+  input:focus, textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(10, 95, 224, .12); }
+  textarea { min-height: 112px; resize: vertical; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; color: var(--muted); font-size: 14px; }
+  .check input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+  #msg { margin: 0; font-size: 15px; color: var(--blue); min-height: 1.4em; }
+
+  footer { border-top: 1px solid var(--line); background: var(--tint); }
+  footer .wrap { padding-block: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; color: var(--muted); font-size: 15px; }
+
+  /* i link del menu non finiscono sotto la barra fissa */
+  [id] { scroll-margin-top: 96px; }
+
+  @media (max-width: 920px) {
+    .hero .wrap, .about, .contact { grid-template-columns: 1fr; }
+    .cats, .brands, .reviews, .infos { grid-template-columns: repeat(2, 1fr); }
+    section { padding-block: 48px; }
+  }
+  /* barra fissa in basso, solo da telefono */
+  .mobile-bar { display: none; }
+
+  @media (max-width: 720px) {
+    header .wrap { padding-block: 12px; gap: 10px; }
+    nav {
+      width: 100%; flex-wrap: nowrap; overflow-x: auto; gap: 20px;
+      padding-bottom: 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a { white-space: nowrap; }
+    [id] { scroll-margin-top: 130px; }
+
+    .hero { padding-block: 30px 12px; }
+    .hero-art { margin-bottom: 20px; }
+    .cta .btn { flex: 1 1 100%; justify-content: center; }
+    .band .cta .btn { flex: 1 1 auto; }
+    section { padding-block: 42px; }
+    .contact { gap: 30px; }
+    form { padding: 22px; }
+
+    .mobile-bar {
+      display: flex; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+      background: rgba(255, 255, 255, .96); backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line);
+      padding: 10px max(12px, env(safe-area-inset-right, 0px))
+               calc(10px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+    }
+    .mobile-bar .btn { flex: 1; justify-content: center; min-height: 48px; padding: 0 12px; font-size: 16px; }
+    body { padding-bottom: 80px; }
+  }
+
+  @media (max-width: 540px) {
+    .cats, .reviews, .infos { grid-template-columns: 1fr; }
+    .sign .a { font-size: 26px; }
+    .sign .b { font-size: 13px; }
+    .facts { gap: 26px; }
+    .fact b { font-size: 52px; }
+    .cat { min-height: 0; padding: 26px 22px; }
+    .cat h3 { font-size: 34px; }
+    h2 { font-size: clamp(30px, 8vw, 40px); }
+    .hero p, .lead { font-size: 17px; }
+    .info dd { font-size: 18px; }
+    .hours th, .hours td { font-size: 16px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .btn, .cat, .brand, .brand img, .review { transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease, opacity .24s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    .cat:hover { transform: translateY(-6px); border-color: var(--blue); box-shadow: 0 18px 38px rgba(18, 29, 43, .09); }
+    .cat::before { transition: transform .26s ease; }
+    .cat:hover::before { transform: scaleX(1); }
+    .brand:hover, .brand:focus-within {
+      transform: translateY(-9px) scale(1.03); border-color: var(--blue);
+      box-shadow: 0 18px 36px rgba(10, 95, 224, .16);
+    }
+    .brand:hover img { opacity: 1; transform: scale(1.05); }
+    .review:hover { transform: translateY(-5px); box-shadow: 0 16px 34px rgba(18, 29, 43, .08); }
+
+    .ticker-track { animation: slide 34s linear infinite; }
+    @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .info-card { transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease; }
+    .info-card:hover {
+      transform: translateY(-6px); border-color: var(--blue);
+      box-shadow: 0 18px 38px rgba(10, 95, 224, .12);
+    }
+
+    .status.is-open .dot { animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(21, 163, 74, .16); }
+      50% { box-shadow: 0 0 0 9px rgba(21, 163, 74, .05); }
+    }
+
+    .rise { animation: rise .7s cubic-bezier(.2, .7, .3, 1) both; }
+    .rise:nth-child(2) { animation-delay: .08s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  }
+</style>
+
+</head>
+<body>
+
+<header id="hd">
+  <div class="wrap">
+    <a class="sign" href="#top" aria-label="Al Mokka Abbigliamento, inizio pagina">
+      <span class="a">AL MOKKA</span><span class="b">ABBIGLIAMENTO</span>
+    </a>
+    <nav aria-label="Menu">
+      <a href="#chi-siamo">Chi siamo</a>
+      <a href="#cosa-trovi">Cosa trovi</a>
+      <a href="#marchi">Marchi</a>
+      <a href="#recensioni">Recensioni</a>
+      <a href="#contatti">Contatti</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-art rise">
+        <div class="sign big"><span class="a">AL MOKKA</span><span class="b">ABBIGLIAMENTO</span></div>
+        <small>Via del Trullo 288 · 00148 Roma</small>
+      </div>
+      <div class="rise">
+        <p class="status" data-status role="status"><span class="dot"></span><span data-label>Orari del negozio</span></p>
+        <p class="eyebrow">Via del Trullo, Roma</p>
+        <h1>Vestiamo <em>tutta</em> la famiglia.</h1>
+        <p>Uomo, donna, bambino e bambina, biancheria da letto e intimo. Un negozio di quartiere da vent'anni, su due stanze.</p>
+        <div class="cta">
+          <a class="btn primary" href="tel:+393280460241">Chiama 328 046 0241</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/Dnj8n8E1KtvuRC9i9" target="_blank" rel="noopener">Come arrivare</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <span>Uomo</span><span>Donna</span><span>Bambino</span><span>Bambina</span><span>Biancheria</span><span>Intimo</span>
+      </div>
+      <div class="ticker-group">
+        <span>Uomo</span><span>Donna</span><span>Bambino</span><span>Bambina</span><span>Biancheria</span><span>Intimo</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="chi-siamo">
+    <div class="wrap">
+      <p class="eyebrow">Chi siamo</p>
+      <h2>Dalla bancarella al negozio</h2>
+      <div class="about">
+      <div>
+        <p>Al Mokka è il negozio della famiglia Alam: padre e figlio, con tutta la famiglia intorno. Prima delle due stanze di oggi c'erano le bancarelle, e uno dei banchi stava proprio qui davanti. Da allora in quartiere conoscono tutti papà, e molti clienti di oggi sono gli stessi di allora. Il negozio è pieno di merce: è difficile uscire senza aver trovato quello che cercavi.</p>
+        <div class="facts">
+          <div class="fact"><b data-count-to="20">20</b><span>anni di esperienza</span></div>
+          <div class="fact"><b data-count-to="2">2</b><span>stanze, con un po' di tutto in ognuna</span></div>
+          <div class="fact"><b data-count-to="2">2</b><span>generazioni dietro al banco: padre e figlio</span></div>
+        </div>
+      </div>
+      <div class="ph" role="img" aria-label="Spazio per la foto del negozio">Foto del negozio<br>da inserire</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cosa-trovi" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Il negozio</p>
+      <h2>Cosa trovi da noi</h2>
+      <p class="lead">Due stanze in cui trovi un po' di tutto, dai più piccoli ai più grandi.</p>
+      <div class="cats">
+        <article class="cat reveal"><h3>Uomo</h3><p>Maglieria, pantaloni, tute, giacche e cinture, per tutti i giorni e per lo sport.</p></article>
+        <article class="cat reveal"><h3>Donna</h3><p>Maglieria, pantaloni e capi comodi per ogni stagione, con cinture e taglie per tutte.</p></article>
+        <article class="cat reveal"><h3>Bambino</h3><p>Dal neonato ai sedici anni: scuola, sport e gioco di tutti i giorni.</p></article>
+        <article class="cat reveal"><h3>Bambina</h3><p>Dal neonato ai sedici anni: capi comodi e qualcosa di più elegante.</p></article>
+        <article class="cat reveal"><h3>Casa</h3><p>Lenzuola, completi, copriletto, asciugamani e accappatoi, in tutte le misure.</p></article>
+        <article class="cat reveal"><h3>Intimo</h3><p>Intimo, pigiami, calze e costumi per uomo, donna e bambini.</p></article>
+      </div>
+      <div class="infos">
+        <article class="info-card reveal">
+          <h3>Tutte le taglie</h3>
+          <p>Dalle taglie più piccole fino alla 6XL e alla 8XL: qui trovi la tua misura.</p>
+        </article>
+        <article class="info-card reveal">
+          <h3>Abbigliamento da lavoro</h3>
+          <p>Pantaloni e camici resistenti, con un ottimo rapporto qualità prezzo.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="brands-band">
+    <section id="marchi">
+      <div class="wrap">
+        <p class="eyebrow">I marchi</p>
+        <h2>Le marche che trovi</h2>
+        <div class="brands">
+          <div class="brand reveal"><img src="loghi/navigare.png" alt="Navigare" loading="lazy"></div>
+          <div class="brand reveal"><img src="loghi/kappa.png" alt="Kappa" loading="lazy"></div>
+          <div class="brand reveal"><img src="loghi/umbro.png" alt="Umbro" loading="lazy"></div>
+          <div class="brand reveal"><img src="loghi/fruit-of-the-loom.png" alt="Fruit of the Loom" loading="lazy"></div>
+          <div class="brand reveal"><img src="loghi/sloggi.png" alt="Sloggi" loading="lazy"></div>
+          <div class="brand reveal"><img src="loghi/pompea.png" alt="Pompea" loading="lazy"></div>
+        </div>
+        <p class="brands-note">E altri marchi: vieni a scoprire le novità in negozio.</p>
+      </div>
+    </section>
+  </div>
+
+  <section id="recensioni">
+    <div class="wrap">
+      <p class="eyebrow">Dicono di noi</p>
+      <h2>Cosa dicono i clienti</h2>
+      <div class="reviews">
+        <article class="review reveal">
+          <p>Negozio perfetto, vestiti ottimi, consigliato.</p>
+          <span class="who">Denis T.</span>
+        </article>
+        <article class="review todo-card reveal">
+          <p>Spazio per la seconda recensione: testo da inserire.</p>
+          <span class="who">Nome e iniziale</span>
+        </article>
+        <article class="review todo-card reveal">
+          <p>Spazio per la terza recensione: testo da inserire.</p>
+          <span class="who">Nome e iniziale</span>
+        </article>
+      </div>
+      <p class="reviews-link"><a href="https://maps.app.goo.gl/Dnj8n8E1KtvuRC9i9" target="_blank" rel="noopener">Leggi tutte le recensioni su Google</a></p>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="wrap">
+      <div>
+        <h2>Passa a trovarci</h2>
+        <p>Siamo aperti in Via del Trullo 288. Per informazioni chiamaci, rispondiamo volentieri.</p>
+      </div>
+      <div class="cta" style="margin:0">
+        <a class="btn light" href="tel:+393280460241">Chiama ora</a>
+        <a class="btn outline-light" href="https://maps.app.goo.gl/Dnj8n8E1KtvuRC9i9" target="_blank" rel="noopener">Come arrivare</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="contatti">
+    <div class="wrap">
+      <p class="eyebrow">Dove siamo</p>
+      <h2>Contatti</h2>
+      <div class="contact">
+        <div>
+          <dl class="info">
+            <div><dt>Indirizzo</dt><dd>Via del Trullo, 288<br>00148 Roma RM</dd></div>
+            <div><dt>Telefono</dt><dd><a href="tel:+393280460241">328 046 0241</a></dd></div>
+            <div>
+              <dt>Orari</dt>
+              <dd>
+                <table class="hours">
+                  <tbody>
+                    <tr data-d="1"><th scope="row">Lunedì</th><td>08:00 – 20:00</td></tr>
+                    <tr data-d="2"><th scope="row">Martedì</th><td>08:00 – 20:00</td></tr>
+                    <tr data-d="3"><th scope="row">Mercoledì</th><td>08:00 – 20:00</td></tr>
+                    <tr data-d="4"><th scope="row">Giovedì</th><td>08:00 – 20:00</td></tr>
+                    <tr data-d="5"><th scope="row">Venerdì</th><td>08:00 – 20:00</td></tr>
+                    <tr data-d="6"><th scope="row">Sabato</th><td>08:00 – 20:00</td></tr>
+                    <tr data-d="0"><th scope="row">Domenica</th><td>09:00 – 19:30</td></tr>
+                  </tbody>
+                </table>
+                <p class="status in-contact" data-status role="status"><span class="dot"></span><span data-label>Orari del negozio</span></p>
+                <p class="hours-note">Nei giorni festivi gli orari possono cambiare: in caso di dubbio chiamaci.</p>
+              </dd>
+            </div>
+            <div>
+              <dt>Pagamenti</dt>
+              <dd>
+                Contanti e carte, anche contactless e da smartphone.
+                <ul class="pays">
+                  <li><img src="pagamenti/visa.svg" alt="Visa" loading="lazy"></li>
+                  <li><img src="pagamenti/mastercard.svg" alt="Mastercard" loading="lazy"></li>
+                  <li><img src="pagamenti/maestro.svg" alt="Maestro" loading="lazy"></li>
+                  <li><img src="pagamenti/amex.svg" alt="American Express" loading="lazy"></li>
+                </ul>
+                <p class="pays-note">Accettiamo anche contanti, Bancomat, pagamenti contactless e da smartphone con Apple Pay, Google Pay e Samsung Pay.</p>
+              </dd>
+            </div>
+          </dl>
+          <div class="mapbox">
+            <span>La mappa verrà incorporata alla pubblicazione.</span>
+            <a class="btn ghost" href="https://maps.app.goo.gl/Dnj8n8E1KtvuRC9i9" target="_blank" rel="noopener">Apri su Google Maps</a>
+          </div>
+        </div>
+        <form id="f" novalidate>
+          <h3>Scrivici</h3>
+          <label for="n">Nome e cognome<input id="n" type="text" autocomplete="name"></label>
+          <label for="t">Telefono<input id="t" type="tel" autocomplete="tel"></label>
+          <label for="e">Email<input id="e" type="email" autocomplete="email"></label>
+          <label for="m">Cosa ti serve?<textarea id="m"></textarea></label>
+          <label class="check" for="p"><input id="p" type="checkbox"><span>Ho letto l'informativa privacy e acconsento al trattamento dei dati per essere ricontattato.</span></label>
+          <button class="btn primary" type="submit">Invia richiesta</button>
+          <p id="msg" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Al Mokka Abbigliamento · Via del Trullo 288, 00148 Roma · P.IVA 12345678</span>
+    <span>Informativa privacy · Bozza</span>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a class="btn primary" href="tel:+393280460241">Chiama</a>
+  <a class="btn ghost" href="https://maps.app.goo.gl/Dnj8n8E1KtvuRC9i9" target="_blank" rel="noopener">Come arrivare</a>
+</div>
+
+<script>
+  document.getElementById('f').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var msg = document.getElementById('msg');
+    if (!document.getElementById('p').checked) {
+      msg.textContent = 'Per inviare la richiesta devi acconsentire al trattamento dei dati.';
+      return;
+    }
+    msg.textContent = 'Bozza: l’invio diretto sarà attivo quando il sito viene pubblicato.';
+  });
+
+  /* Orario di apertura: 0 = domenica. Minuti dalla mezzanotte [apertura, chiusura]. */
+  var ORARI = {
+    0: [9 * 60, 19 * 60 + 30],
+    1: [8 * 60, 20 * 60], 2: [8 * 60, 20 * 60], 3: [8 * 60, 20 * 60],
+    4: [8 * 60, 20 * 60], 5: [8 * 60, 20 * 60], 6: [8 * 60, 20 * 60]
+  };
+  var WD = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+  var romeFmt = null;
+  try {
+    romeFmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Europe/Rome', weekday: 'short',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    });
+  } catch (err) { romeFmt = null; }
+
+  function oraRoma() {
+    if (romeFmt) {
+      try {
+        var p = {};
+        romeFmt.formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+        return {
+          d: WD[p.weekday],
+          s: (parseInt(p.hour, 10) % 24) * 3600 + parseInt(p.minute, 10) * 60 + parseInt(p.second, 10)
+        };
+      } catch (err) { /* ricade sull'ora del dispositivo */ }
+    }
+    var n = new Date();
+    return { d: n.getDay(), s: n.getHours() * 3600 + n.getMinutes() * 60 + n.getSeconds() };
+  }
+
+  var boxes = document.querySelectorAll('[data-status]');
+  var righe = document.querySelectorAll('.hours tr');
+  var giornoSegnato = -1;
+
+  function aggiorna() {
+    var t = oraRoma();
+    var oggi = ORARI[t.d];
+    var aperto = t.s >= oggi[0] * 60 && t.s < oggi[1] * 60;
+    var testo = aperto ? 'Aperto ora' : 'Chiuso ora';
+
+    for (var i = 0; i < boxes.length; i++) {
+      boxes[i].classList.toggle('is-open', aperto);
+      boxes[i].classList.toggle('is-closed', !aperto);
+      boxes[i].querySelector('[data-label]').textContent = testo;
+    }
+
+    if (t.d !== giornoSegnato) {
+      giornoSegnato = t.d;
+      for (var j = 0; j < righe.length; j++) {
+        righe[j].classList.toggle('today', righe[j].getAttribute('data-d') === String(t.d));
+      }
+    }
+  }
+
+  aggiorna();
+  setInterval(aggiorna, 30000);
+
+  /* numeri animati in Chi siamo */
+  function animaNumero(el) {
+    var fine = parseInt(el.getAttribute('data-count-to'), 10);
+    if (!fine) { return; }
+    var durata = 1200, inizio = null;
+    el.textContent = '0';
+    function passo(ts) {
+      if (inizio === null) { inizio = ts; }
+      var p = Math.min((ts - inizio) / durata, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(fine * e));
+      if (p < 1) { requestAnimationFrame(passo); } else { el.textContent = String(fine); }
+    }
+    requestAnimationFrame(passo);
+  }
+
+  var numeri = document.querySelectorAll('[data-count-to]');
+  var motoOk = !window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (numeri.length && motoOk && 'IntersectionObserver' in window && 'requestAnimationFrame' in window) {
+    var io = new IntersectionObserver(function (voci) {
+      voci.forEach(function (v) {
+        if (!v.isIntersecting) { return; }
+        io.unobserve(v.target);
+        animaNumero(v.target);
+      });
+    }, { threshold: 0.5 });
+    for (var k = 0; k < numeri.length; k++) { io.observe(numeri[k]); }
+  }
+
+  /* le card compaiono mentre si scorre */
+  var daMostrare = document.querySelectorAll('.reveal');
+  if (daMostrare.length && motoOk && 'IntersectionObserver' in window) {
+    document.body.classList.add('reveal-on');
+    var mostraTutto = function () {
+      for (var q = 0; q < daMostrare.length; q++) { daMostrare[q].classList.add('in'); }
+    };
+    var ro = new IntersectionObserver(function (voci) {
+      voci.forEach(function (v) {
+        if (!v.isIntersecting) { return; }
+        ro.unobserve(v.target);
+        var i = parseInt(v.target.getAttribute('data-i'), 10) || 0;
+        v.target.style.transitionDelay = (i % 3) * 80 + 'ms';
+        v.target.classList.add('in');
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+    for (var r = 0; r < daMostrare.length; r++) {
+      daMostrare[r].setAttribute('data-i', r);
+      ro.observe(daMostrare[r]);
+    }
+    setTimeout(mostraTutto, 2500);
+  }
+
+  var hd = document.getElementById('hd');
+  var onScroll = function () {
+    if (window.scrollY > 8) { hd.classList.add('stuck'); } else { hd.classList.remove('stuck'); }
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+</body>
+</html>
