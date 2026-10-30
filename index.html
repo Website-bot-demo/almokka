@@ -13,9 +13,16 @@
   :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 </style>
 <title>Al Mokka Abbigliamento</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;600;700;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+  @font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 300; font-display: swap; src: url("fonts/barlow-condensed-latin-300-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/barlow-condensed-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/barlow-condensed-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/barlow-condensed-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/barlow-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/barlow-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Barlow"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/barlow-latin-600-normal.woff2") format("woff2"); }
+</style>
 <style>
   /* Layout: insegna come marchio, nastro scorrevole dei reparti, griglie a card, banda blu per i contatti. */
   :root {
@@ -560,7 +567,7 @@
             </div>
           </dl>
           <div class="mapbox">
-            <span>La mappa verrà incorporata alla pubblicazione.</span>
+            <span>Via del Trullo 288, 00148 Roma</span>
             <a class="btn ghost" href="https://maps.app.goo.gl/Dnj8n8E1KtvuRC9i9" target="_blank" rel="noopener">Apri su Google Maps</a>
           </div>
         </div>
@@ -574,7 +581,7 @@
           <label for="t">Telefono<input id="t" name="telefono" type="tel" autocomplete="tel"></label>
           <label for="e">Email<input id="e" name="email" type="email" autocomplete="email"></label>
           <label for="m">Cosa ti serve?<textarea id="m" name="messaggio" required></textarea></label>
-          <label class="check" for="p"><input id="p" type="checkbox"><span>Ho letto l'informativa privacy e acconsento al trattamento dei dati per essere ricontattato.</span></label>
+          <label class="check" for="p"><input id="p" type="checkbox"><span>Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei dati per essere ricontattato.</span></label>
           <button class="btn primary" type="submit">Invia richiesta</button>
           <p id="msg" role="status"></p>
         </form>
@@ -585,8 +592,8 @@
 
 <footer>
   <div class="wrap">
-    <span>Al Mokka Abbigliamento · Via del Trullo 288, 00148 Roma · P.IVA 12345678</span>
-    <span>Informativa privacy · Bozza</span>
+    <span>Abbigliamento Al Mokka di Morshid Alam · Via del Trullo 288, 00148 Roma · P.IVA 08480901001</span>
+    <span><a href="privacy.html">Informativa privacy</a></span>
   </div>
 </footer>
 
