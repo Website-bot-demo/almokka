@@ -566,10 +566,14 @@
         </div>
         <form id="f" novalidate>
           <h3>Scrivici</h3>
-          <label for="n">Nome e cognome<input id="n" type="text" autocomplete="name"></label>
-          <label for="t">Telefono<input id="t" type="tel" autocomplete="tel"></label>
-          <label for="e">Email<input id="e" type="email" autocomplete="email"></label>
-          <label for="m">Cosa ti serve?<textarea id="m"></textarea></label>
+          <input type="hidden" name="access_key" value="e0e3dabd-dad2-4060-880c-1605f91b4f24">
+          <input type="hidden" name="subject" value="Richiesta dal sito – Al Mokka Abbigliamento">
+          <input type="hidden" name="from_name" value="Sito Al Mokka">
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
+          <label for="n">Nome e cognome<input id="n" name="nome" type="text" autocomplete="name" required></label>
+          <label for="t">Telefono<input id="t" name="telefono" type="tel" autocomplete="tel"></label>
+          <label for="e">Email<input id="e" name="email" type="email" autocomplete="email"></label>
+          <label for="m">Cosa ti serve?<textarea id="m" name="messaggio" required></textarea></label>
           <label class="check" for="p"><input id="p" type="checkbox"><span>Ho letto l'informativa privacy e acconsento al trattamento dei dati per essere ricontattato.</span></label>
           <button class="btn primary" type="submit">Invia richiesta</button>
           <p id="msg" role="status"></p>
@@ -599,7 +603,32 @@
       msg.textContent = 'Per inviare la richiesta devi acconsentire al trattamento dei dati.';
       return;
     }
-    msg.textContent = 'Bozza: l’invio diretto sarà attivo quando il sito viene pubblicato.';
+    var form = document.getElementById('f');
+    if (!document.getElementById('n').value.trim() || !document.getElementById('m').value.trim()) {
+      msg.textContent = 'Scrivi almeno il tuo nome e cosa ti serve.';
+      return;
+    }
+    if (!document.getElementById('t').value.trim() && !document.getElementById('e').value.trim()) {
+      msg.textContent = 'Lascia un numero di telefono o un’email per essere ricontattato.';
+      return;
+    }
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    msg.textContent = 'Invio in corso…';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.success) {
+        form.reset();
+        msg.textContent = 'Grazie! Abbiamo ricevuto la tua richiesta e ti ricontatteremo presto.';
+      } else {
+        msg.textContent = 'Non è stato possibile inviare. Chiamaci al 328 046 0241.';
+      }
+    }).catch(function () {
+      msg.textContent = 'Non è stato possibile inviare. Chiamaci al 328 046 0241.';
+    }).then(function () { btn.disabled = false; });
   });
 
   /* Orario di apertura: 0 = domenica. Minuti dalla mezzanotte [apertura, chiusura]. */
