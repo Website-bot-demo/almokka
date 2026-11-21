@@ -288,6 +288,9 @@
   .check input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
   #msg { margin: 0; font-size: 15px; color: var(--blue); min-height: 1.4em; }
 
+  #newsletter .nl-perks { list-style: none; padding: 0; margin: 22px auto 0; max-width: 480px; display: grid; gap: 9px; text-align: left; }
+  #newsletter .nl-perks li { position: relative; padding-left: 30px; font-weight: 600; }
+  #newsletter .nl-perks li::before { content: "✓"; position: absolute; left: 4px; color: var(--blue); font-weight: 700; }
   #newsletter form { max-width: 540px; margin: 26px auto 0; }
   #newsletter form .hint { margin: 0; font-size: 14px; color: var(--muted); }
   #newsletter .nl-msg { margin: 0; font-size: 15px; font-weight: 600; }
@@ -523,7 +526,12 @@
     <div class="wrap">
       <p class="eyebrow">Resta aggiornato</p>
       <h2>Le novità, prima degli altri</h2>
-      <p class="lead">Lasciaci la tua email e ti scriviamo quando arriva la roba nuova o parte una promozione. Al massimo due volte al mese, niente di più. Ti cancelli quando vuoi.</p>
+      <p class="lead">Lasciaci la tua email e sei dentro. Ti scriviamo quando arrivano i capi nuovi e quando partono le promozioni.</p>
+      <ul class="nl-perks">
+        <li>Sconti riservati a chi è iscritto</li>
+        <li>Le promozioni in anticipo, prima che partano in negozio</li>
+        <li>I capi nuovi appena arrivano, prima che vadano in vetrina</li>
+      </ul>
 
       <!-- Collegato al modulo Brevo "Iscrizione newsletter - sito almokka.it",
            lista "Newsletter Al Mokka", con doppia conferma attiva. -->

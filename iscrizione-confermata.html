@@ -17,6 +17,9 @@
   .eyebrow { font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif; font-weight: 600; font-size: 16px; letter-spacing: .18em; text-transform: uppercase; color: var(--red); margin: 0 0 10px; }
   h1 { font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif; font-weight: 700; color: var(--navy); line-height: 1.1; margin: 0; font-size: clamp(40px, 8vw, 58px); text-transform: uppercase; }
   .lead { color: var(--muted); margin: 18px auto 0; max-width: 46ch; font-size: 18px; }
+  .perks { list-style: none; padding: 0; margin: 28px auto 0; max-width: 460px; display: grid; gap: 10px; text-align: left; }
+  .perks li { position: relative; padding-left: 30px; font-weight: 600; }
+  .perks li::before { content: "✓"; position: absolute; left: 4px; color: var(--blue); font-weight: 700; }
   .box { background: var(--tint); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; margin-top: 32px; text-align: left; }
   .box p { margin: 0; color: var(--muted); font-size: 16px; }
   .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
@@ -30,10 +33,16 @@
 <main class="wrap">
   <p class="eyebrow">Iscrizione confermata</p>
   <h1>Ci sei</h1>
-  <p class="lead">Grazie, la tua iscrizione è attiva. Ti scriveremo quando arrivano i capi nuovi o parte una promozione: al massimo due volte al mese, come promesso.</p>
+  <p class="lead">Grazie, la tua email è confermata e l'iscrizione è attiva. Da adesso sei tra i primi a sapere cosa succede in negozio.</p>
+
+  <ul class="perks">
+    <li>Sconti riservati a chi è iscritto</li>
+    <li>Le promozioni in anticipo, prima che partano in negozio</li>
+    <li>I capi nuovi appena arrivano, prima che vadano in vetrina</li>
+  </ul>
 
   <div class="box">
-    <p>Puoi cancellarti quando vuoi, con il link in fondo a ogni email oppure dicendocelo in negozio. Per qualsiasi cosa siamo in Via del Trullo 288 o al 328 046 0241.</p>
+    <p>Puoi cancellarti quando vuoi, con il link in fondo a ogni email oppure dicendocelo in negozio.</p>
   </div>
 
   <div class="cta">
