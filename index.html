@@ -290,6 +290,10 @@
 
   #newsletter form { max-width: 540px; margin: 26px auto 0; }
   #newsletter form .hint { margin: 0; font-size: 14px; color: var(--muted); }
+  #newsletter .nl-msg { margin: 0; font-size: 15px; font-weight: 600; }
+  #newsletter .nl-msg:empty { display: none; }
+  #newsletter .nl-msg.ok { color: var(--blue); }
+  #newsletter .nl-msg.err { color: var(--red); }
 
   footer { border-top: 1px solid var(--line); background: var(--tint); }
   footer .wrap { padding-block: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; color: var(--muted); font-size: 15px; }
@@ -534,6 +538,7 @@
         </label>
         <button class="btn primary" type="submit">Iscrivimi</button>
         <p class="hint">Ti arriverà un'email per confermare l'iscrizione: senza quel clic non ti scriviamo.</p>
+        <p class="nl-msg" id="nl-msg" role="status"></p>
         <!-- trappola antispam: i bot la riempiono, le persone no. Deve restare vuota. -->
         <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
         <input type="hidden" name="locale" value="it">
@@ -665,6 +670,33 @@
     }).catch(function () {
       msg.textContent = 'Non è stato possibile inviare. Chiamaci al 328 046 0241.';
     }).then(function () { btn.disabled = false; });
+  });
+
+  /* Iscrizione newsletter: invia a Brevo senza far uscire la persona dal sito.
+     Se la richiesta non riesce, si ricade sull'invio normale del modulo. */
+  document.getElementById('nl').addEventListener('submit', function (ev) {
+    var form = document.getElementById('nl');
+    if (!form.checkValidity()) return;
+    ev.preventDefault();
+    var msg = document.getElementById('nl-msg');
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    msg.className = 'nl-msg';
+    msg.textContent = 'Un attimo…';
+    fetch(form.action, { method: 'POST', body: new FormData(form) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d.success) {
+          form.reset();
+          msg.className = 'nl-msg ok';
+          msg.textContent = d.message || 'Controlla la tua email e clicca sul link di conferma.';
+        } else {
+          msg.className = 'nl-msg err';
+          msg.textContent = (d.errors && d.errors.EMAIL) || 'Non ha funzionato. Riprova tra qualche minuto.';
+        }
+        btn.disabled = false;
+      })
+      .catch(function () { form.submit(); });
   });
 
   /* Orario di apertura: 0 = domenica. Minuti dalla mezzanotte [apertura, chiusura]. */
