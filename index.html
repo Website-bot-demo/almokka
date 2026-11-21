@@ -288,6 +288,9 @@
   .check input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
   #msg { margin: 0; font-size: 15px; color: var(--blue); min-height: 1.4em; }
 
+  #newsletter form { max-width: 540px; margin: 26px auto 0; }
+  #newsletter form .hint { margin: 0; font-size: 14px; color: var(--muted); }
+
   footer { border-top: 1px solid var(--line); background: var(--tint); }
   footer .wrap { padding-block: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; color: var(--muted); font-size: 15px; }
 
@@ -509,6 +512,30 @@
         </article>
       </div>
       <p class="reviews-link"><a href="https://maps.app.goo.gl/Dnj8n8E1KtvuRC9i9" target="_blank" rel="noopener">Leggi tutte le recensioni su Google</a></p>
+    </div>
+  </section>
+
+  <section id="newsletter">
+    <div class="wrap">
+      <p class="eyebrow">Resta aggiornato</p>
+      <h2>Le novità, prima degli altri</h2>
+      <p class="lead">Lasciaci la tua email e ti scriviamo quando arriva la roba nuova o parte una promozione. Al massimo due volte al mese, niente di più. Ti cancelli quando vuoi.</p>
+
+      <!-- Il modulo non e' ancora collegato: l'indirizzo in "action" va sostituito con
+           quello del modulo Brevo, una volta verificato il telefono e attivata la
+           doppia conferma. Finche' resta cosi', questa sezione non va pubblicata. -->
+      <form id="nl" action="DA-COLLEGARE-A-BREVO" method="POST">
+        <h3>Iscriviti</h3>
+        <label for="nl-email">La tua email
+          <input id="nl-email" name="EMAIL" type="email" autocomplete="email" placeholder="nome@esempio.it" required>
+        </label>
+        <label class="check" for="nl-ok">
+          <input id="nl-ok" name="OPT_IN" type="checkbox" value="1" required>
+          <span>Acconsento a ricevere via email le novità e le promozioni di Al Mokka Abbigliamento. Posso cancellarmi quando voglio. Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a>.</span>
+        </label>
+        <button class="btn primary" type="submit">Iscrivimi</button>
+        <p class="hint">Ti arriverà un'email per confermare l'iscrizione: senza quel clic non ti scriviamo.</p>
+      </form>
     </div>
   </section>
 
