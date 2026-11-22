@@ -292,6 +292,7 @@
   #newsletter .nl-perks li { position: relative; padding-left: 30px; font-weight: 600; }
   #newsletter .nl-perks li::before { content: "✓"; position: absolute; left: 4px; color: var(--blue); font-weight: 700; }
   #newsletter form { max-width: 540px; margin: 26px auto 0; }
+  #newsletter form .opt { font-weight: 400; font-size: 13px; color: var(--muted); letter-spacing: .02em; }
   #newsletter form .hint { margin: 0; font-size: 14px; color: var(--muted); }
   #newsletter .nl-msg { margin: 0; font-size: 15px; font-weight: 600; }
   #newsletter .nl-msg:empty { display: none; }
@@ -537,6 +538,9 @@
            lista "Newsletter Al Mokka", con doppia conferma attiva. -->
       <form id="nl" action="https://24ac717d.sibforms.com/v2/serve/MUIFAJPNm05VJCwi9qBbh-iXP25oWKfphDNoMjlnO56zt-ExbaC75P4AORN-QuodxQpx7PO3SGKXOwORJnwOVZpmPO82f5f_JNgP1KM3lAz98oX3ziGxX_PIu14gpzwYIW2MHuSGZ9y7J7RHgC9onhXZyvg_tCroNFmtI5kvCzPObbVUXNrRvjQgDdLOaytdemfDaUSeQPsj39sUvQ==" method="POST">
         <h3>Iscriviti</h3>
+        <label for="nl-nome">Il tuo nome <span class="opt">facoltativo</span>
+          <input id="nl-nome" name="FIRSTNAME" type="text" autocomplete="given-name" placeholder="Mario" maxlength="200">
+        </label>
         <label for="nl-email">La tua email
           <input id="nl-email" name="EMAIL" type="email" autocomplete="email" placeholder="nome@esempio.it" required>
         </label>
