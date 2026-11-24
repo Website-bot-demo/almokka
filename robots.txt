@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /iscrizione-confermata.html
+
+Sitemap: https://almokka.it/sitemap.xml
