@@ -105,5 +105,6 @@
 
   btn.addEventListener('click', function () { panel.classList.contains('open') ? panel.classList.remove('open') : open(); });
   panel.querySelector('.gc-x').addEventListener('click', function () { panel.classList.remove('open'); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) { panel.classList.remove('open'); btn.focus(); } });
   form.addEventListener('submit', function (e) { e.preventDefault(); ask(input.value); });
 })();
