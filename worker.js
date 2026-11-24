@@ -42,7 +42,7 @@ AL MOKKA ABBIGLIAMENTO — informazioni ufficiali (usa SOLO queste)
   · Bambino e bambina: dal neonato ai sedici anni (scuola, sport, gioco; per la bambina anche qualcosa di più elegante).
   · Casa: lenzuola, completi, copriletto, asciugamani e accappatoi, in tutte le misure.
   · Intimo: intimo, pigiami, calze e costumi per uomo, donna e bambini.
-  · Tutte le taglie: dalle più piccole fino alla 6XL e alla 8XL.
+  · Tutte le taglie: dalla S alla 8XL, comprese le taglie forti (5XL, 6XL, 7XL, 8XL). La disponibilità di una taglia per un capo preciso va chiesta in negozio.
   · Abbigliamento da lavoro: pantaloni e camici resistenti, con un ottimo rapporto qualità prezzo.
 - Marchi presenti sul sito: Fruit of the Loom, Kappa, Navigare, Pompea, Sloggi, Umbro, e altri marchi (le novità si scoprono in negozio).
 - Pagamenti: contanti, Bancomat, carte (Visa, Mastercard, Maestro, American Express), contactless e da smartphone con Apple Pay, Google Pay e Samsung Pay.
