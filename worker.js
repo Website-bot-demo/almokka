@@ -135,7 +135,21 @@ export default {
 
     const apiKey = env[site.keyName] || env.ANTHROPIC_API_KEY;
     const fallback = "Al momento non riesco a rispondere. Chiamaci al " + site.phone + " o passa in negozio.";
-    if (!apiKey) return json({ reply: fallback }, 200, allowed);
+    // Finché non c'è la chiave di Anthropic si usa il modello gratuito di Cloudflare (se il binding "AI" esiste).
+    if (!apiKey) {
+      if (!env.AI) return json({ reply: fallback }, 200, allowed);
+      try {
+        const out = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+          messages: [{ role: "system", content: site.rules + "\n" + site.knowledge }, ...messages],
+          max_tokens: 300,
+          temperature: 0.2,
+        });
+        const reply = (out && out.response ? String(out.response) : "").trim();
+        return json({ reply: reply || fallback }, 200, allowed);
+      } catch (e) {
+        return json({ reply: fallback }, 200, allowed);
+      }
+    }
     // Claude vuole che la conversazione inizi con il cliente: tolgo eventuali risposte iniziali.
     while (messages.length && messages[0].role !== "user") messages.shift();
 
