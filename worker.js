@@ -1,8 +1,9 @@
-// Assistente virtuale dei siti dei clienti dell'agenzia — un solo Cloudflare Worker con Workers AI.
+// Assistente virtuale dei siti dei clienti dell'agenzia — un solo Cloudflare Worker; le risposte le scrive Claude (API Anthropic).
 // Ogni sito ha le sue informazioni e le sue regole; il sito viene riconosciuto dall'origine della richiesta.
-// Richiede il binding "AI" (Workers AI). Non salva le conversazioni.
+// Secret richiesti: ANTHROPIC_API_KEY (oppure una chiave per negozio: KEY_ALMOKKA, KEY_OTTICA). Binding opzionale "RL" (rate limit).
+// Non salva le conversazioni.
 
-const MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
+const MODEL = "claude-haiku-5-5";
 
 const OTTICA_KNOWLEDGE = `
 OTTICA DI GIAMMARCO — informazioni ufficiali (usa SOLO queste)
@@ -77,8 +78,8 @@ INFORMAZIONI:
 `;
 
 const SITES = {
-  "otticadigiammarco.com": { rules: OTTICA_RULES, knowledge: OTTICA_KNOWLEDGE, phone: "06 55 93 477" },
-  "almokka.it": { rules: ALMOKKA_RULES, knowledge: ALMOKKA_KNOWLEDGE, phone: "328 046 0241" },
+  "otticadigiammarco.com": { rules: OTTICA_RULES, knowledge: OTTICA_KNOWLEDGE, phone: "06 55 93 477", keyName: "KEY_OTTICA" },
+  "almokka.it": { rules: ALMOKKA_RULES, knowledge: ALMOKKA_KNOWLEDGE, phone: "328 046 0241", keyName: "KEY_ALMOKKA" },
 };
 
 // Origine -> sito. Le anteprime su GitHub Pages scelgono il sito dal campo "site" della richiesta.
@@ -132,16 +133,29 @@ export default {
       return json({ error: "Messaggio mancante" }, 400, allowed);
     }
 
+    const apiKey = env[site.keyName] || env.ANTHROPIC_API_KEY;
+    const fallback = "Al momento non riesco a rispondere. Chiamaci al " + site.phone + " o passa in negozio.";
+    if (!apiKey) return json({ reply: fallback }, 200, allowed);
+    // Claude vuole che la conversazione inizi con il cliente: tolgo eventuali risposte iniziali.
+    while (messages.length && messages[0].role !== "user") messages.shift();
+
     try {
-      const out = await env.AI.run(MODEL, {
-        messages: [{ role: "system", content: site.rules + "\n" + site.knowledge }, ...messages],
-        max_tokens: 300,
-        temperature: 0.2,
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+        body: JSON.stringify({
+          model: MODEL,
+          max_tokens: 400,
+          system: site.rules + "\n" + site.knowledge,
+          messages,
+        }),
       });
-      const reply = (out && out.response ? String(out.response) : "").trim();
+      if (!r.ok) return json({ reply: fallback }, 200, allowed);
+      const out = await r.json();
+      const reply = (out.content || []).filter((c) => c.type === "text").map((c) => c.text).join("").trim();
       return json({ reply: reply || "Scusa, non ho capito. Puoi chiamarci al " + site.phone + "." }, 200, allowed);
     } catch (e) {
-      return json({ reply: "Al momento non riesco a rispondere. Chiamaci al " + site.phone + " o passa in negozio." }, 200, allowed);
+      return json({ reply: fallback }, 200, allowed);
     }
   },
 };
